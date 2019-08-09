@@ -1,0 +1,525 @@
+﻿
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detail</h2>
+
+<div class="row" id="chart">
+    <div class="col-md-3">
+        <div class="card card-default">
+            <div class="card-body">
+                <ul class="list">
+                    <li>
+                        Machine ID: <span class="machineId"></span>
+                    </li>
+                    <li>
+                        Machine name: <span class="machineName"></span>
+                    </li>
+                    <li>
+                        Model no: ABCDE <span class="modelNo"></span>
+                    </li>
+                    <li>
+                        Line: <span class="line"></span>
+                    </li>
+                    <li>
+                        Worker ID:<span class="workerId"></span>
+                    </li>
+                    <li>
+                        Worker name:<span class="workerName"></span>
+                    </li>
+                    <li>
+                        Leader ID:<span class="leaderId"></span>
+                    </li>
+                    <li>
+                        Leader name:<span class="leaderName"></span>
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-md-3">
+        <div class="card card-default">
+            <div class="card-body">
+                <ul class="list">
+
+                    <li>
+                        Date time: @DateTime.Now
+                    </li>
+                    <li>
+                        Operation ID: <span class="operationId"></span>
+                    </li>
+                    <li>
+                        Operation name: <span class="operationName"></span>
+                    </li>
+                    <li style="list-style:none!important">
+                        <br />
+                    </li>
+                    <li class="btn btn-success ">
+                        Standard CT: <span style="font-weight:bold" class="standardCT"> 25 (seconds)</span>
+                    </li>
+                    <li class="btn btn-success realCTli">
+                        Real CT: <span id="realCT" class="realCT" style=" font-weight:bold"> 25 </span>
+                    </li>
+                    <li class="btn btn-success sinceli">
+                        Since: <span class="since"></span>
+                    </li>
+                    <li class="btn btn-success averageCTli">
+                        AVG CT: <span style="font-weight:bold" id="avg" class="averageCT"> 25 </span>
+                    </li>
+                    <li>
+                        On Going: <span id="onGoing" style="color:#00ff21; font-weight:bold" class="onGoing"> 25 </span>
+                    </li>
+                    <li>
+                        Best CT: <span id="bestCT" style="color:#00ff21; font-weight:bold" class="bestCT"> 25 </span>
+                    </li>
+                    <li>
+                        Worst CT: <span id="worstCT" style="color:#00ff21; font-weight:bold" class="worstCT"> 25 </span>
+                    </li>
+
+                    <li>
+                        Availability: <span id="availability" class="availability" style="color:#00ff21; font-weight:bold"> 25 </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card card-default">
+            <div class="card-body">
+                <ul class="list">
+                    <li>
+                        Components:
+                    </li>
+                    <li class="component1">
+
+                    </li>
+                    <li class="component2">
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card card-default">
+            <div class="card-body">
+                <ul class="list">
+                    <li>
+                        Estimate daily output: <span class="edo"></span>
+                    </li>
+                    <li>
+                        Estimate best daily output: <span class="ebdo"></span>
+
+                    </li>
+                    <li>
+                        Estimate daily balance:  <span class="edb"></span>
+
+                    </li>
+                    <li>
+                        Daily Output by now:  <span class="dobn"></span>
+
+                    </li>
+                    <li style="list-style:none!important">
+                        <br />
+                    </li>
+                    <li>
+                        Estimate hourly output:  <span class="eho"></span>
+                    </li>
+                    <li>
+                        Estimate best hourly output: <span class="ebho"></span>
+                    </li>
+                    <li>
+                        Estimate  hourly balance: <span class="ehb"></span>
+                    </li>
+                    <li>
+                        Hourly Output by now:  <span class="hobn"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="chart">
+            <canvas id="lineChart"></canvas>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="chart">
+            <canvas id="barChart"></canvas>
+        </div>
+    </div>
+
+</div>
+<div class="row" style="margin-top:20px">
+    <div class="col-md-6">
+        <div class="col-md-4">
+
+            <button class="btn btn-primary">Show SOP</button>
+        </div>
+        <div class="col-md-4">
+
+            <button class="btn btn-primary"> Extract reliort</button>
+        </div>
+        <div class="col-md-4">
+
+            <button class="btn btn-primary">Subscribe</button>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card card-default">
+                    <div class="card-body">
+                        <ul class="list">
+                            <li>
+                                Analysis:
+                            </li>
+                            <li>
+                                1.Steli 2 is under 1 sec of  the standard time .
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary" style="display:block;width:100%; height:80px">
+                    <i class="glyphicon glyphicon-thumbs-up" style="font-size:40px"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <script>
+        $(function () {
+            chart.init();
+        })
+
+        //var LoadData = function () {
+        //    $.ajax({
+        //        url: '/Factory/LoadData',
+        //        dataType: "json",
+        //        type: "GET",
+        //        contentType: 'application/json; charset=utf-8',
+        //        async: true,
+        //        processData: false,
+        //        cache: false,
+        //        success: function (data) {
+        //            var obj = $.parseJSON(data);
+        //            console.log(obj);
+        //            $("#bestCT").text(obj.MinRealTime + " (seconds)");
+        //            $("#avg").text(obj.AverageTimeCycleTime + " (seconds)");
+        //            if (obj.RealTimeCycleTime > 25) {
+        //                $(".realCT").addClass("red");
+        //                $(".realCT").text(obj.RealTimeCycleTime + " (seconds)");
+        //            }
+        //            else {
+        //                $(".realCT").removeClass("red");
+        //                 $(".realCT").text(obj.RealTimeCycleTime + " (seconds)");
+        //            }
+
+        //            $("#availability").text(obj.Availability + " %");
+        //        },
+        //        error: function (xhr) {
+        //            console.log(xhr);
+        //        }
+        //    });
+        //}
+        //setInterval(LoadData, 500);
+        var chart = {
+            init() {
+                //chart.loadData();
+                setInterval(this.loadData.bind(this), 100);
+                chart.registerEvent();
+                chart.machineDetail();
+                chart.workerDetail();
+                 setInterval(this.analysisDetail.bind(this), 100);
+                chart.componentsDetail();
+            },
+            registerEvent() {
+                var ctx1 = document.getElementById('barChart');
+                var stackedBar = new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        labels: ['1.loading', '2.adjustment', '3.cut', '4.unloading'],
+                        datasets: [{
+                            label: 'Operation CT Trend chart',
+                            data: [5, 8, 6, 6],
+                            fill: "#ffffff",
+                            borderWidth: 2,
+
+                            borderColor: "#06b9dd",
+
+                            backgroundColor: "#fff",
+
+                            pointBackgroundColor: "#06b9dd"
+
+                        }],
+
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                stacked: true
+                            }],
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        }
+                    }
+                });
+
+
+
+
+            },
+            loadData() {
+
+                $.ajax({
+                    url: 'http://10.4.0.57:8041/api/cycleTimes',
+                    dataType: "json",
+                    type: "GET",
+                    contentType: 'application/json; charset=utf-8',
+                    async: true,
+                    processData: false,
+                    cache: false,
+                    success: function (data) {
+
+                        if (data[0].length !== 0) {
+                            var cycleTimeCollection = data[0].cycleTimeCollection;
+
+                            var labels = [];
+                            console.log(labels);
+                            var datasets = [];
+                            console.log(datasets);
+                            for (var i = 0; i < cycleTimeCollection.length; i++) {
+
+                                labels.push(cycleTimeCollection[i].c);
+                                datasets.push(Math.round(cycleTimeCollection[i].d));
+
+                                if (i == 9) {
+                                    if (cycleTimeCollection[9].d > data[0].standardCT) {
+                                        $('.realCTli').addClass("btn-danger").removeClass("btn-success");
+                                        $('.sinceli').addClass("btn-danger").removeClass("btn-success");
+
+                                    } else {
+                                        $('.realCTli').addClass("btn-success").removeClass("btn-danger");
+                                        $('.sinceli').addClass("btn-success").removeClass("btn-danger");
+                                    }
+                                    $('.realCT').text(cycleTimeCollection[9].d + " seconds");
+                                    $('.since').text(cycleTimeCollection[9].c);
+                                }
+                            }
+                            $('.operationId').text(data[0].operationId);
+                            $('.operationName').text(data[0].operationName);
+                            $('.standardCT').text(data[0].standardCT + " seconds");
+                            $('.bestCT').text(data[0].bestCT + " seconds");
+                            $('.worstCT').text(data[0].worstCT + " seconds");
+                            $('.onGoing').text(data[0].onGoing + " seconds");
+                            if (cycleTimeCollection[9].d > data[0].standardCT) {
+                                $('.averageCTli').addClass("btn-danger").removeClass("btn-success");
+
+                            } else {
+                                $('.averageCTli').addClass("btn-success").removeClass("btn-danger");
+                            }
+                            $('.averageCT').text(data[0].averageCT + " seconds");
+                            $('.availability').text(data[0].availability + " %");
+
+                            var ctx = document.getElementById('lineChart');
+
+                            //ctx.height = 180;
+                            Chart.defaults.global.defaultFontSize = 16;
+
+                            var myChart = new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        label: 'Operation CT Trend chart',
+                                        data: datasets,
+                                        fill: "#ffffff",
+                                        borderWidth: 2,
+
+                                        borderColor: "#06b9dd",
+
+                                        backgroundColor: "#06b9dd",
+
+                                        pointBackgroundColor: "#06b9dd"
+
+                                    }],
+
+                                },
+                                options: {
+                                    plugins: {
+                                        datalabels: {
+                                            display: false
+                                        }
+                                    },
+                                    elements: {
+                                        line: {
+                                            tension: 0
+                                        }
+
+                                    },
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true,
+                                                //steps: 10,
+                                                //stepValue: 5,
+                                                //max: 100
+                                            }
+                                        }],
+                                        xAxes: [{
+                                            ticks: {
+                                                beginAtZero: true,
+
+                                            }
+                                        }]
+                                    },
+                                    hover: {
+                                        animationDuration: 0
+                                    },
+                                    animation: {
+                                        duration: 1,
+                                        onComplete: function () {
+                                            var chartInstance = this.chart,
+                                                ctx = chartInstance.ctx;
+
+                                            ctx.textAlign = 'center';
+                                            ctx.textBaseline = 'bottom';
+
+                                            this.data.datasets.forEach(function (dataset, i) {
+                                                var meta = chartInstance.controller.getDatasetMeta(i);
+                                                meta.data.forEach(function (bar, index) {
+                                                    var data = dataset.data[index];
+                                                    ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                                                });
+                                            });
+                                        }
+                                    },
+                                    tooltips: {
+                                        enabled: false
+                                    },
+                                }
+                            });
+                        }
+                    },
+                    error: function (xhr) {
+                        console.log(xhr);
+                    }
+                });
+
+            }
+            ,
+            machineDetail() {
+                $.ajax({
+                    url: 'http://10.4.0.57:8041/api/machines',
+                    dataType: "json",
+                    type: "GET",
+                    contentType: 'application/json; charset=utf-8',
+                    async: true,
+                    processData: false,
+                    cache: false,
+                    success: function (data) {
+                        console.log(data);
+                        var data = data[0];
+                        $('.machineId').text(data.machineId);
+                        $('.machineName').text(data.machineName);
+                        $('.modelNo').text(data.modelNo);
+                        $('.line').text(data.line);
+                    },
+                    error: function (xhr) {
+                        console.log(xhr);
+                    }
+                });
+            },
+            workerDetail() {
+                $.ajax({
+                    url: 'http://10.4.0.57:8041/api/workers',
+                    dataType: "json",
+                    type: "GET",
+                    contentType: 'application/json; charset=utf-8',
+                    async: true,
+                    processData: false,
+                    cache: false,
+                    success: function (data) {
+                        console.log(data);
+                        var data = data[0];
+                        $('.workerId').text(data.workerId);
+                        $('.workerName').text(data.workerName);
+                        $('.leaderId').text(data.leaderId);
+                        $('.leaderName').text(data.leaderName);
+                    },
+                    error: function (xhr) {
+                        console.log(xhr);
+                    }
+                });
+            },
+            analysisDetail() {
+                $.ajax({
+                    url: 'http://10.4.0.57:8041/api/analysis',
+                    dataType: "json",
+                    type: "GET",
+                    contentType: 'application/json; charset=utf-8',
+                    async: true,
+                    processData: false,
+                    cache: false,
+                    success: function (data) {
+                        console.log(data);
+                        //var data = data[0];
+                        $('.edo').text(data.edo);
+                        $('.ebdo').text(data.ebdo);
+                        $('.edb').text(data.edb);
+                        $('.dobn').text(data.dobn);
+                        $('.eho').text(data.eho);
+                        $('.ebho').text(data.ebho);
+                        $('.ehb').text(data.ehb);
+                        $('.hobn').text(data.hobn);
+                    },
+                    error: function (xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }
+            , componentsDetail() {
+                $.ajax({
+                    url: 'http://10.4.0.57:8041/api/componentCollections',
+                    dataType: "json",
+                    type: "GET",
+                    contentType: 'application/json; charset=utf-8',
+                    async: true,
+                    processData: false,
+                    cache: false,
+                    success: function (data) {
+                        console.log(data[0]);
+                         console.log(data[1]);
+                        var html = '';
+                        var count = 1;
+                        $.each(data[0], function (i,item) {
+                            console.log(item);
+                            html += '<p>' + count + '. ' + item + '</p>';
+                            count++
+                        });
+                        
+                        $('.component1').append(html);
+
+                    },
+                    error: function (xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }
+        }
+
+    </script>
+}
